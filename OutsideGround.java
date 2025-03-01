@@ -12,7 +12,7 @@ public class OutsideGround extends Building
         
         super(baseLocation, -height, normColor);
         //this.updateHeight = -heigh
-        super.updateRoofColor(Color.WHITE);
+        super.updateRoofColor(groundColor);
         
     }
 }
