@@ -185,6 +185,29 @@ public class CityscapeCalculator{
         // left to right
         return sortByXCoord(coordPairsToSort);
     }
+    public static boolean sideHandling(double overall[][], boolean delay[], boolean face1){
+        boolean face = face1;
+        
+        boolean x1 = (Math.abs(overall[0][1]-overall[1][1])<0.4);
+        boolean x2 = (Math.abs(overall[2][1]-overall[3][1])<0.4);
+        boolean x3 = (overall[2][1]-overall[3][1])<=0;
+        boolean y1 = (Math.abs(overall[1][1]-overall[2][1])<0.4);
+        boolean y2 = (Math.abs(overall[3][1]-overall[0][1])<0.4);
+        boolean y3 = (overall[1][1]-overall[2][1])<=0;
+        //System.out.println(y1 + " " + y2 + " " + y3);
+
+        if (((x1&&x2&&x3)||(y1&&y2&&y3)) && 
+             (delay[0] && delay[1] && delay[2])){
+            face = !face;
+            delay[0] = false;
+        }
+        else{
+            delay[2] = delay[1];
+            delay[1] = delay[0];
+            delay[0] = true;
+        }
+        return face;
+    }
     /**
     * Sorts the coordinates by their x value least to most
     * 

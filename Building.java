@@ -21,7 +21,11 @@ public class Building {
     private Quadrilateral face2;
 
     
-    private Color drawColor; // color of buildings
+    private Color drawColorRoof; // color of buildings
+    private Color drawColorSideLight;
+    private Color drawColorSideDark;
+    
+    
     private boolean face = true; // tells which side iss suppposed to be dark
     private boolean[] delay = {true,true,true}; // used to make sure the epislon doesn't proc multiple times
     
@@ -33,7 +37,11 @@ public class Building {
      */
     public Building(double[][] baseLocation, double height, Color buildingColor){
         //System.out.println("flag");
-        this.drawColor= buildingColor;
+        
+        this.drawColorRoof= buildingColor;
+        this.drawColorSideLight = buildingColor.brighter();
+        this.drawColorSideDark = buildingColor.darker();
+        
         this.baseCoords = baseLocation;
         this.buildingHeight = height; 
         this.drawCoords = CityscapeCalculator.findCoordsOfSides(baseCoords);
@@ -85,6 +93,7 @@ public class Building {
         face1.draw(g, CityscapeCalculator.tuneRGB(drawColorRGB,twoPoints2, 600,1));
         */
         
+       //face = 
         boolean x1 = (Math.abs(overall[0][1]-overall[1][1])<0.4);
         boolean x2 = (Math.abs(overall[2][1]-overall[3][1])<0.4);
         boolean x3 = (overall[2][1]-overall[3][1])<=0;
@@ -104,14 +113,14 @@ public class Building {
             this.delay[0] = true;
         }
         if (face){
-            this.roof.draw(g, this.drawColor);
-            this.face1.draw(g, this.drawColor.brighter());
-            this.face2.draw(g, this.drawColor.darker());
+            this.roof.draw(g, this.drawColorRoof);
+            this.face1.draw(g, this.drawColorSideLight);
+            this.face2.draw(g, this.drawColorSideDark);
         }
         else{
-            this.roof.draw(g, this.drawColor);
-            this.face2.draw(g, this.drawColor.brighter());
-            this.face1.draw(g, this.drawColor.darker());
+            this.roof.draw(g, this.drawColorRoof);
+            this.face2.draw(g, this.drawColorSideLight);
+            this.face1.draw(g, this.drawColorSideDark);
         }
         
     }
@@ -158,7 +167,17 @@ public class Building {
      * @param newColor the new draw color
      */
     public void updateColor(Color newColor){
-        this.drawColor = newColor;
+        this.drawColorRoof= newColor;
+        this.drawColorSideLight = newColor.brighter();
+        this.drawColorSideDark = newColor.darker();
+    }
+    /**
+     * Changes roof color
+     * 
+     * @param newColor the new roof color
+     */
+    public void updateRoofColor(Color newColor){
+        this.drawColorRoof = newColor;
     }
     /**
     * Returns the x cordinates of the building
