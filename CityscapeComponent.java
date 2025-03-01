@@ -61,6 +61,7 @@ public class CityscapeComponent extends JComponent
     */
     public void autoGenerateBuildings(long setSeed){
         Random randy = new Random(setSeed);
+        
         this.buildingList = new Building[(int)(MAX_X*2)][(int)(MAX_Y*2)];
         this.buildingListCoords = new double[(int)(MAX_X*2)][(int)(MAX_Y*2)][4][2];
         buildingShadow = new Building[(int)(MAX_X*2)][(int)(MAX_Y*2)];

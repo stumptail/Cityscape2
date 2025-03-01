@@ -46,8 +46,8 @@ public class Building {
         //System.out.println("flag");
         
         this.floorCount = floors; 
-        windowList1 = new Window[floors][2];
-        windowList2 = new Window[floors][2];
+        windowList1 = new Window[-floors][2];
+        windowList2 = new Window[-floors][2];
         
         this.drawColorRoof= buildingColor;
         this.drawColorSideLight = buildingColor.brighter();
@@ -99,7 +99,8 @@ public class Building {
             segment2[0] = (drawCoords[1][0]-drawCoords[2][0])/5;
             segment2[1] = (drawCoords[1][1]-drawCoords[2][1])/5;
             
-            //double[] coord1 = new double[];
+            
+            double[] coord1 = new double[]{segment1[0]};
             //windowList1[i][0] = new Window();
         }
     }
