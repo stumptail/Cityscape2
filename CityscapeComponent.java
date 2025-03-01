@@ -19,6 +19,7 @@ public class CityscapeComponent extends JComponent
     
     private final double MAX_X = 3;
     private final double MAX_Y = 3;
+    private final double GROUND_HEIGHT =200;
     
     private Building[][] buildingList;
     private Building[][] buildingShadow;
@@ -46,7 +47,7 @@ public class CityscapeComponent extends JComponent
         double[][] boundingBox = {{0, 0}, {2000, 0}, {2000, 2000}, {0, 2000}};
         
         this.background = new Background();
-        this.outside    = new OutsideGround(boundingBox,140,BROWN, Color.BLACK); // placholder vals here
+        this.outside    = new OutsideGround(boundingBox,GROUND_HEIGHT,BROWN, Color.BLACK); // placholder vals here
         //this.ground     = new Ground(boundingBox[0],boundingBox[1],boundingBox[2],boundingBox[3]);
     }
 
@@ -193,8 +194,11 @@ public class CityscapeComponent extends JComponent
         for (int i = 0; i<4; i++){
             location[i][0] += X_OFFSET;
             location[i][1] += Y_OFFSET;
+            location[i][1] +=GROUND_HEIGHT;
         }
+        
         outside.updateLocation(this.location);
+        this.location = new double[][]{newC1,newC2,newC3,newC4};
         background.setCycle(time);
         // request that the Java Runtime repaints this component by invoking its paintComponent method
         //  do not explicitly invoke the paintComponent method

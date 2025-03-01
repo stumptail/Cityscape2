@@ -10,9 +10,9 @@ public class OutsideGround extends Building
 {
     public OutsideGround(double[][] baseLocation, double height, Color normColor, Color groundColor){
         
-        super(baseLocation, height, normColor);
-        
-        this.updateRoofColor(Color.BLACK);
+        super(baseLocation, -height, normColor);
+        //this.updateHeight = -heigh
+        super.updateRoofColor(Color.WHITE);
         
     }
 }
