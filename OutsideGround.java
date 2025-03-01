@@ -8,7 +8,7 @@ import java.awt.*;
  */
 public class OutsideGround extends Building
 {
-    public OutsideGround(double[][] baseLocation, double height, Color normColor, Color groundColor){
+    public OutsideGround(double[][] baseLocation, int height, Color normColor, Color groundColor){
         
         super(baseLocation, -height, normColor);
         //this.updateHeight = -heigh

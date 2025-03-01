@@ -19,7 +19,7 @@ public class CityscapeComponent extends JComponent
     
     private final double MAX_X = 3;
     private final double MAX_Y = 3;
-    private final double GROUND_HEIGHT =200;
+    private final int GROUND_HEIGHT =200;
     
     private Building[][] buildingList;
     private Building[][] buildingShadow;
@@ -28,6 +28,7 @@ public class CityscapeComponent extends JComponent
     private Background background;
     
     private double[][] location; 
+    private double[][] location2; 
     //private Ground ground;
     private OutsideGround outside;
     
@@ -47,7 +48,7 @@ public class CityscapeComponent extends JComponent
         double[][] boundingBox = {{0, 0}, {2000, 0}, {2000, 2000}, {0, 2000}};
         
         this.background = new Background();
-        this.outside    = new OutsideGround(boundingBox,GROUND_HEIGHT,BROWN, Color.BLACK); // placholder vals here
+        this.outside    = new OutsideGround(boundingBox,GROUND_HEIGHT/5,BROWN, Color.BLACK); // placholder vals here
         //this.ground     = new Ground(boundingBox[0],boundingBox[1],boundingBox[2],boundingBox[3]);
     }
 
@@ -68,7 +69,7 @@ public class CityscapeComponent extends JComponent
             for (int j = -(int)MAX_Y; j<(MAX_Y); j++){
                 //System.out.println(i + " " + j + " " + (int)(MAX_Y*2));
 
-                double randHeight = randy.nextDouble()*randy.nextDouble()*400+25;
+                int randFloor = (int)(randy.nextDouble()*randy.nextDouble()*80+5);
                 
                 this.buildingListCoords[i+(int)MAX_X][j+(int)MAX_Y] =
                         new double[][]{{i+0.1,j+0.1},{i+0.9,j+0.1},{i+0.9,j+0.9},{i+0.1,j+0.9}};
@@ -77,10 +78,10 @@ public class CityscapeComponent extends JComponent
                         new double[][]{{i+0.1,j+0.1},{i+0.9,j+0.1},{i+0.9,j+0.9},{i+0.1,j+0.9}};
                         
                 this.buildingList[i+(int)MAX_X][j+(int)MAX_Y] =
-                        new Building(buildingListCoords[i+(int)MAX_X][j+(int)MAX_Y], -randHeight, Color.GRAY);
+                        new Building(buildingListCoords[i+(int)MAX_X][j+(int)MAX_Y], -randFloor, Color.GRAY);
                         
                 this.buildingShadow[i+(int)MAX_X][j+(int)MAX_Y] =
-                        new Building(buildingListCoords[i+(int)MAX_X][j+(int)MAX_Y], -randHeight,
+                        new Building(buildingListCoords[i+(int)MAX_X][j+(int)MAX_Y], -randFloor,
                                 Color.DARK_GRAY);
             }
         }
@@ -121,21 +122,21 @@ public class CityscapeComponent extends JComponent
         final boolean ghostMode = false;
 
         for (int i =0; i<drawList.length; i++){
-            drawShadow[i].draw(g2, this.location);
+            drawShadow[i].draw(g2, this.location2);
             drawList[i].updateColor(drawColor);
-            drawList[i].draw(g2, this.location);
+            drawList[i].draw(g2, this.location2);
         }
         if (ghostMode) {
 
             for (Building building : drawShadow) {
-                building.draw(g2, this.location);
+                building.draw(g2, this.location2);
             }
 
 
 
             for (Building building : drawList) {
                 building.updateColor(drawColor);
-                building.draw(g2, this.location);
+                building.draw(g2, this.location2);
             }
 
         }
@@ -199,6 +200,7 @@ public class CityscapeComponent extends JComponent
         
         outside.updateLocation(this.location);
         this.location = new double[][]{newC1,newC2,newC3,newC4};
+        this.location2 = new double[][]{newC1,newC2,newC3,newC4};
         background.setCycle(time);
         // request that the Java Runtime repaints this component by invoking its paintComponent method
         //  do not explicitly invoke the paintComponent method

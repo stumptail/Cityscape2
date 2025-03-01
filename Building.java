@@ -9,11 +9,18 @@ import java.awt.Color;
  * @version 14 October 2024
  */
 public class Building {
+    
+    
+    private Window[][] windowList1;
+    private Window[][] windowList2;
+    private boolean generatedWindows; 
+    
     // the x-y cordinate needed to draw
     private double[][] baseCoords;
     private double[][] drawCoords;
 
     private double buildingHeight;
+    private int floorCount; 
 
     // the four parrallegrams that each buildings is made of
     private Quadrilateral roof;
@@ -35,20 +42,26 @@ public class Building {
      * @param baseLocation a list of cordinates for each corner
      * @param height the height of the building
      */
-    public Building(double[][] baseLocation, double height, Color buildingColor){
+    public Building(double[][] baseLocation, int floors, Color buildingColor){
         //System.out.println("flag");
+        
+        this.floorCount = floors; 
+        windowList1 = new Window[floors][2];
+        windowList2 = new Window[floors][2];
         
         this.drawColorRoof= buildingColor;
         this.drawColorSideLight = buildingColor.brighter();
         this.drawColorSideDark = buildingColor.darker();
         
         this.baseCoords = baseLocation;
-        this.buildingHeight = height; 
+        this.buildingHeight = floors*5; 
         this.drawCoords = CityscapeCalculator.findCoordsOfSides(baseCoords);
         //for (int i=0; i< drawCoords.length; i++){
         //     System.out.println(drawCoords[i][0] + " " +drawCoords[i][1]);
         //}
-        //updateLocation(baseLocation) ;
+        //updateLocation(baseLocation) 
+        
+        
         double[][] roofCoords = new double[4][2];
         for (int i =0; i<4; i++){
             roofCoords[i][0] = this.baseCoords[i][0];
@@ -66,7 +79,7 @@ public class Building {
         this.face2 = new Quadrilateral (this.drawCoords[1],this.drawCoords[2],elvatedDrawCoords[2],elvatedDrawCoords[1]);
         
     }
-
+    
     /**
      * toString method for Building
      *
@@ -76,6 +89,21 @@ public class Building {
 
         return "Roof: " + this.roof + "Side1: " + this.face1 + "Side2: " +this.face2;
     }
+    public void generateWindows(){
+        for (int i=0; i< floorCount; i++){
+            int bottomY = floorCount*5;
+            double[] segment1 = new double[2];
+            double[] segment2 = new double[2];
+            segment1[0] = (drawCoords[0][0]-drawCoords[1][0])/5;
+            segment1[1] = (drawCoords[0][1]-drawCoords[1][1])/5;
+            segment2[0] = (drawCoords[1][0]-drawCoords[2][0])/5;
+            segment2[1] = (drawCoords[1][1]-drawCoords[2][1])/5;
+            
+            //double[] coord1 = new double[];
+            //windowList1[i][0] = new Window();
+        }
+    }
+    
     /**
      * Draws the building
      * 
@@ -112,6 +140,7 @@ public class Building {
             this.delay[1] = this.delay[0];
             this.delay[0] = true;
         }
+        //this.face = CityscapeCalculator.sideHandling(overall);
         if (face){
             this.roof.draw(g, this.drawColorRoof);
             this.face1.draw(g, this.drawColorSideLight);

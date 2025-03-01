@@ -22,7 +22,7 @@ public class Background
     float opacityOfDay; 
 
     //
-    final int MAXCYCLE = 10000;
+    final int MAXCYCLE = 1000;
     final int MIDDAY = MAXCYCLE/2;
     //  ---------------------------------------------------------------------------
     //night0              midDay150           day300        midDay450           Night600
